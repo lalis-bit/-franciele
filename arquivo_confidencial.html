@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Arquivo Confidencial</title>
+<style>
+body {
+    margin: 0;
+    font-family: monospace;
+    background: #0b0b0b;
+    color: #eaeaea;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+.container { max-width: 600px; }
+button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background: #222;
+    color: #fff;
+    border: 1px solid #555;
+    cursor: pointer;
+}
+.hidden { display: none; }
+</style>
+</head>
+<body>
+
+<div class="container" id="screen"></div>
+
+<script>
+let step = 0;
+let wrongClicks = 0;
+
+function render() {
+    const el = document.getElementById("screen");
+
+    if (step === 0) {
+        el.innerHTML = `
+        <h2>ARQUIVO CONFIDENCIAL</h2>
+        <p>Acesso autorizado apenas para Franciele.</p>
+        <p>Data de emissão: 12 de junho.</p>
+        <p>Conteúdo sensível.<br>Prossiga por sua conta e risco.</p>
+        <button onclick="next()">Abrir arquivo</button>
+        `;
+    }
+
+    if (step === 1) {
+        el.innerHTML = `
+        <p>Antes de acessar o conteúdo integral deste arquivo,<br>
+        será necessário concluir algumas etapas.</p>
+        <p>Tempo estimado: 3 minutos.<br>
+        Nível de dificuldade: discutível.</p>
+        <button onclick="next()">Prosseguir</button>
+        `;
+    }
+
+    if (step === 2) {
+        el.innerHTML = `
+        <p>☑ Risadas em excesso podem resultar em falta de ar.</p>
+        <p>☑ Reclamações sobre saudade serão aceitas a qualquer horário.</p>
+        <p>☑ Cafunés podem ser exigidos sem aviso prévio.</p>
+        <p>☑ É proibido ir embora sem dar beijo de despedida.</p>
+        <button onclick="next()">Concordar e continuar</button>
+        `;
+    }
+
+    if (step === 3) {
+        el.innerHTML = `
+        <p>Selecione apenas aquilo que merece permanecer.</p>
+        <button onclick="correct()">☕ Café</button><br>
+        <button onclick="correct()">🫂 Abraço demorado</button><br>
+        <button onclick="correct()">💋 Beijo roubado</button><br>
+        <button onclick="correct()">🍕 Comer alguma besteira juntas</button><br>
+        <button onclick="wrong()">📋 Resolver todos os problemas da vida numa terça-feira às 15h</button><br>
+        <button onclick="correct()">😴 Tirar um cochilo juntas</button>
+        `;
+    }
+
+    if (step === 4) {
+        el.innerHTML = `
+        <p>Etapa final desbloqueada.</p>
+        <button onclick="next()">Continuar</button>
+        `;
+    }
+
+    if (step === 5) {
+        el.innerHTML = `
+        <p>Considerando todas as evidências apresentadas...</p>
+        <p>você ainda escolheria passar seus finais de semana comigo?</p>
+        <button onclick="yes()">Sim</button>
+        <button onclick="no()">Não</button>
+        `;
+    }
+
+    if (step === 6) {
+        typeWriter();
+    }
+}
+
+function next() {
+    step++;
+    render();
+}
+
+function correct() {
+    step = 4;
+    render();
+}
+
+function wrong() {
+    alert("Resposta incorreta. Nem tudo precisa ser resolvido imediatamente.");
+}
+
+function no() {
+    wrongClicks++;
+    if (wrongClicks === 1) alert("Tem certeza?");
+    else if (wrongClicks === 2) alert("Sua solicitação foi encaminhada para análise.");
+    else {
+        alert("Após avaliação criteriosa, o pedido foi indeferido.");
+        render();
+    }
+}
+
+function yes() {
+    step = 6;
+    render();
+}
+
+function typeWriter() {
+    const el = document.getElementById("screen");
+    const text = `De: Larissa
+Para: Franciele
+
+Tentei pensar absurdamente no que escrever, mas me sinto nervosa em datas comemorativas...
+
+Eu te amo para todo sempre.
+Nunca esqueça disso.`;
+
+    let i = 0;
+    el.innerHTML = "";
+
+    function typing() {
+        if (i < text.length) {
+            el.innerHTML += text.charAt(i);
+            i++;
+            setTimeout(typing, 30);
+        }
+    }
+    typing();
+}
+
+render();
+</script>
+
+</body>
+</html>
